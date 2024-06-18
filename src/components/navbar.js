@@ -1,8 +1,20 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Button from "react-bootstrap/Button";
+import Cookies from "js-cookie";
+import {useNavigate } from "react-router-dom";
+
 
 function NavbarComponent() {
+    const navigate= useNavigate();
+
+    function logout() {
+        Cookies.remove('tokene');
+        navigate('/sign-in');
+        window.location.reload();
+    }
+
     return (
             <Navbar bg="dark" data-bs-theme="dark">
                 <Container>
@@ -11,6 +23,9 @@ function NavbarComponent() {
                         <Nav.Link href="/courses">Course Management</Nav.Link>
                         <Nav.Link href="/students">Student Management</Nav.Link>
                     </Nav>
+                    <h6 style={{color : "aqua", marginLeft : "30%", marginTop: "5px"}}>Hello Admin  &#128512;</h6>
+                    <Button variant="outline-danger" style={{marginLeft : "50px", width : '100px'}} onClick={logout}>Log Out</Button>
+
                 </Container>
             </Navbar>
     );

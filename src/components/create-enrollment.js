@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link,useNavigate} from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Stack from 'react-bootstrap/Stack';
@@ -14,7 +14,7 @@ function CreateEnrollment() {
     const [allCourses, setAllCourses] = useState("");
     const [user, setUsers] = useState("");
     const [course, setCourses] = useState("");
-
+    const navigate= useNavigate();
 
     const valueUser = (e) => setUsers(e.target.value);
     const valueCourse = (e) => setCourses(e.target.value);
@@ -54,7 +54,8 @@ function CreateEnrollment() {
 
             if (data.code === 200) {
                 alert(data.message)
-                window.open(`/`);
+                navigate('/');
+                window.location.reload();
             } else {
                 alert("Login error")
             }

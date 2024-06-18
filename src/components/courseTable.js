@@ -40,7 +40,7 @@ function CourseEnrollmentTable() {
                         <h4> Courses </h4>
                     </Col>
                     <Col>
-                        <Link to="/create-enrollment">
+                        <Link to="/create-course">
                             <Button variant="outline-primary" style={{width : "30%",marginLeft : "400px"}}>Create Course</Button>
                         </Link>
                     </Col>

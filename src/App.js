@@ -9,6 +9,7 @@ import Landing from "./components/landing"
 import CreateEnrollment from "./components/create-enrollment"
 import CourseTable from "./components/courseTable"
 import StudentTable from "./components/studentTable"
+import CreateCourse from "./components/create-course"
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
               <Route exact path="create-enrollment" element={<CreateEnrollment/>} />
               <Route exact path="courses" element={<CourseTable/>} />
               <Route exact path="students" element={<StudentTable/>} />
+              <Route exact path="create-course" element={<CreateCourse/>} />
             </Routes>
           </Router>
         </div>

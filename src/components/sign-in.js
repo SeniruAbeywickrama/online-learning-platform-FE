@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
@@ -7,30 +7,47 @@ import base_url from "../config";
 import axios from "axios";
 
 
+
 function SignIn() {
     const [validated, setValidated] = useState(false);
     const [email, setEmail] = useState(false);
     const [password, setPassword] = useState(false);
+    const navigate = useNavigate();
 
     async function signIn(){
         try {
-            const { data } = await axios.post(base_url + "userRoutes/login", {
-                email : email,
-                password : password
-            });
+            // const { data } = await axios.post(base_url + "userRoutes/login", {
+            //     email : email,
+            //     password : password
+            // });
 
-            if(data.code === 401){
-                alert(data.error)
-            }else if(data.code === 402){
-                alert(data.error)
-            }else if(data.code === 200){
-                console.log("ok");
-                alert("Login successfully")
-                window.open(`/`);
-            }else {
-                alert("Login error")
-            }
-            console.log(data);
+            fetch(base_url + "userRoutes/login", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password }),
+                credentials: 'include'  // This is necessary to send cookies with the request
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if(data.code === 401){
+                        alert(data.error)
+                    }else if(data.code === 402){
+                        alert(data.error)
+                    }else if(data.code === 200){
+                        console.log("ok");
+                        alert("Login successfully");
+                        navigate('/');
+                        window.location.reload();
+                    }else {
+                        alert("Login error")
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         } catch (error) {
             console.error('Error saving product:', error);
         }
