@@ -5,14 +5,23 @@ import axios from "axios";
 import base_url from "../config";
 import {useState} from "react";
 import Button from "react-bootstrap/Button";
-import {Row} from "react-bootstrap";
+import {Modal, Row} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import {Link} from "react-router-dom";
 import NavbarComponent from "./navbar";
+import {MdDelete} from "react-icons/md";
 
 function CourseEnrollmentTable() {
 
     const [enrollments, setEnrollments] = useState(false);
+    const [show, setShow] = useState(false);
+    const [id, setId] = useState(null);
+
+    const handleClose = () => setShow(false);
+    const handleShow = (id) => {
+        setId(id)
+        setShow(true);
+    }
 
     async function getEnrollmentData() {
         try {
@@ -22,6 +31,19 @@ function CourseEnrollmentTable() {
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const deleteCourse = () =>{
+        const headers = {
+            id: id,
+        };
+        axios.delete(base_url + "courseRoute/delete-course", { headers })
+            .then(() => console.log("Delete successfully"))
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+        setShow(false)
+        window.location.reload();
     }
 
     useEffect(() => {
@@ -63,11 +85,29 @@ function CourseEnrollmentTable() {
                             <td>{course._id}</td>
                             <td>{course.code}</td>
                             <td>{course.name}</td>
-                            <td colSpan={course.colSpan || 1}>{course.action}</td>
+                            <td>
+                                <Button variant="danger" onClick={() => handleShow(course._id)}>
+                                    <MdDelete className="text-xl"/>
+                                </Button>
+                            </td>
                         </tr>
                     ))}
                     </tbody>
                 </Table>
+                <Modal show={show} onHide={handleClose} animation={false}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Delete</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Are you sure you want to delete this?</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                        <Button variant="danger" onClick={deleteCourse}>
+                            Delete
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </Stack>
             </>
         );

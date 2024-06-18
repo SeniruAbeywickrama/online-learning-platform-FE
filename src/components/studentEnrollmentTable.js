@@ -87,7 +87,7 @@ function StudentCourseEnrollmentTable(props) {
                                 <td>{student.user}</td>
                                 <td>{student.course}</td>
                                 <td>
-                                    <Button variant="primary" onClick={() => handleShow(student.id)}>
+                                    <Button variant="danger" onClick={() => handleShow(student.id)}>
                                         <MdDelete className="text-xl"/>
                                     </Button>
                                 </td>
