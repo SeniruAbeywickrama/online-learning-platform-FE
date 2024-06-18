@@ -16,38 +16,59 @@ function SignIn() {
 
     async function signIn(){
         try {
-            // const { data } = await axios.post(base_url + "userRoutes/login", {
-            //     email : email,
-            //     password : password
-            // });
-
-            fetch(base_url + "userRoutes/login", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
+            const { data } = await axios.post(base_url + "userRoutes/login",
+                {
+                    email : email,
+                    password : password
                 },
-                body: JSON.stringify({ email, password }),
-                credentials: 'include'  // This is necessary to send cookies with the request
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    if(data.code === 401){
-                        alert(data.error)
-                    }else if(data.code === 402){
-                        alert(data.error)
-                    }else if(data.code === 200){
-                        console.log("ok");
-                        alert("Login successfully");
-                        navigate('/');
-                        window.location.reload();
-                    }else {
-                        alert("Login error")
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+                {
+                    headers: {
+                                'Content-Type': 'application/json'
+                    },
+                    withCredentials : 'include'
+                }
+                );
+
+            if(data.code === 401){
+                alert(data.error)
+            }else if(data.code === 402){
+                alert(data.error)
+            }else if(data.code === 200){
+                console.log("ok");
+                alert("Login successfully");
+                navigate('/');
+                window.location.reload();
+            }else {
+                alert("Login error")
+            }
+
+            // fetch(base_url + "userRoutes/login", {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify({ email, password }),
+            //     credentials: 'include'  // This is necessary to send cookies with the request
+            // })
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         console.log(data);
+            //         if(data.code === 401){
+            //             alert(data.error)
+            //         }else if(data.code === 402){
+            //             alert(data.error)
+            //         }else if(data.code === 200){
+            //             console.log("ok");
+            //             alert("Login successfully");
+            //             navigate('/');
+            //             window.location.reload();
+            //         }else {
+            //             alert("Login error")
+            //         }
+            //     })
+            //     .catch(error => {
+            //         console.error('Error:', error);
+            //     });
         } catch (error) {
             console.error('Error saving product:', error);
         }
